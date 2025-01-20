@@ -2,9 +2,11 @@ package goz
 
 import (
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/MarkDin/eventsource"
 	"github.com/tidwall/gjson"
@@ -140,27 +142,36 @@ func (r *Response) Stream() chan []byte {
 func (r *Response) parseSteam() {
 	r.stream = make(chan []byte)
 	decoder := eventsource.NewDecoder(r.resp.Body)
-
+	timeoutTicker := time.NewTicker(10 * time.Second)
+	defer timeoutTicker.Stop()
 	go func() {
 		defer r.resp.Body.Close()
 		defer close(r.stream)
 
 		for {
-			event, err := decoder.Decode()
-			if err != nil {
-				r.err = fmt.Errorf("decode data failed: %v", err)
-				return
-			}
-
-			data := event.Data()
-			if data == "[DONE]" || strings.Contains(data, "inference_info") {
-				// 触发关闭 decoder 内部的 goroutine
+			select {
+			case <-timeoutTicker.C:
+				log.Println("decode data timeout")
 				decoder.Close()
-				// read data finished, success return
 				return
-			}
+			default:
+				event, err := decoder.Decode()
+				if err != nil {
+					r.err = fmt.Errorf("decode data failed: %v", err)
+					return
+				}
 
-			r.stream <- []byte(data)
+				data := event.Data()
+				if data == "[DONE]" || strings.Contains(data, "inference_info") {
+					log.Println("decode data finished")
+					// 触发关闭 decoder 内部的 goroutine
+					decoder.Close()
+					// read data finished, success return
+					return
+				}
+
+				r.stream <- []byte(data)
+			}
 		}
 	}()
 }
