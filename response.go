@@ -142,15 +142,15 @@ func (r *Response) Stream() chan []byte {
 func (r *Response) parseSteam() {
 	r.stream = make(chan []byte)
 	decoder := eventsource.NewDecoder(r.resp.Body)
-	timeoutTicker := time.NewTicker(10 * time.Second)
-	defer timeoutTicker.Stop()
+	defer log.Println("parseSteam finished")
 	go func() {
 		defer r.resp.Body.Close()
 		defer close(r.stream)
 
 		for {
+			timeout := time.After(5 * time.Second)
 			select {
-			case <-timeoutTicker.C:
+			case <-timeout:
 				log.Println("decode data timeout")
 				decoder.Close()
 				return
@@ -158,6 +158,7 @@ func (r *Response) parseSteam() {
 				event, err := decoder.Decode()
 				if err != nil {
 					r.err = fmt.Errorf("decode data failed: %v", err)
+					log.Println("decode data failed: ", err)
 					return
 				}
 
