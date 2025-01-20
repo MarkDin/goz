@@ -153,7 +153,7 @@ func (r *Response) parseSteam() {
 			}
 
 			data := event.Data()
-			if data == "[DONE]" {
+			if data == "[DONE]" || strings.Contains(data, "inference_info") {
 				// read data finished, success return
 				return
 			}
