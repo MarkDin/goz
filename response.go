@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/launchdarkly/eventsource"
+	"github.com/MarkDin/eventsource"
 	"github.com/tidwall/gjson"
 )
 
@@ -154,6 +154,8 @@ func (r *Response) parseSteam() {
 
 			data := event.Data()
 			if data == "[DONE]" || strings.Contains(data, "inference_info") {
+				// 触发关闭 decoder 内部的 goroutine
+				decoder.Close()
 				// read data finished, success return
 				return
 			}

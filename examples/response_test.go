@@ -2,9 +2,15 @@ package goz
 
 import (
 	"fmt"
+	"io"
 	"log"
+	"runtime"
+	"strings"
+	"testing"
+	"time"
 
-	"github.com/idoubi/goz"
+	"github.com/MarkDin/eventsource"
+	"github.com/MarkDin/goz"
 )
 
 func ExampleResponse_GetBody() {
@@ -159,4 +165,63 @@ func ExampleResponse_IsTimeout() {
 	}
 
 	fmt.Println("not timeout")
+}
+
+func TestDecoderDecode(t *testing.T) {
+	reader := strings.NewReader("data: test\n\n")
+	decoder := eventsource.NewDecoder(reader)
+	defer decoder.Close()
+
+	event, err := decoder.Decode()
+	if err != nil {
+		t.Fatalf("Expected no error, got: %v", err)
+	}
+
+	if event.Data() != "test" {
+		t.Errorf("Expected event data to be 'test', got: %s", event.Data())
+	}
+}
+
+func TestDecoderCloseReturnsEOF(t *testing.T) {
+	reader := strings.NewReader("data: test\n\n")
+	decoder := eventsource.NewDecoder(reader)
+
+	// 在另一个 goroutine 中关闭 decoder
+	go func() {
+		decoder.Close()
+	}()
+	time.Sleep(100 * time.Millisecond)
+	// 这次读取应该返回 EOF
+	_, err := decoder.Decode()
+	if err != io.EOF {
+		t.Errorf("Expected EOF error, got: %v", err)
+	}
+}
+
+func TestNoGoroutineLeak(t *testing.T) {
+	before := runtime.NumGoroutine()
+
+	reader := strings.NewReader("data: test\n\n")
+	decoder := eventsource.NewDecoder(reader)
+
+	// 读取一个事件
+	event, err := decoder.Decode()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if event.Data() != "test" {
+		t.Errorf("Expected event data to be 'test', got: %s", event.Data())
+	}
+
+	// 关闭 decoder
+	decoder.Close()
+
+	// 等待一小段时间确保 goroutine 都已退出
+	time.Sleep(100 * time.Millisecond)
+
+	after := runtime.NumGoroutine()
+	if after > before {
+		t.Errorf("Goroutine leak detected: before=%d, after=%d", before, after)
+	}
 }

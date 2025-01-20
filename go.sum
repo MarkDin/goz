@@ -1,3 +1,5 @@
+github.com/MarkDin/eventsource v1.0.1 h1:EJ27ZJvfbH6q/dBG+jTe1oc+xiSf8zygMGFcXejoWfg=
+github.com/MarkDin/eventsource v1.0.1/go.mod h1:qiJeA0NbvJ0Szd0Czn+PnkUaEIgWEsM/8DXcQ8anytY=
 github.com/basgys/goxml2json v1.1.0 h1:4ln5i4rseYfXNd86lGEB+Vi652IsIXIvggKM/BhUKVw=
 github.com/basgys/goxml2json v1.1.0/go.mod h1:wH7a5Np/Q4QoECFIU8zTQlZwZkrilY0itPfecMw41Dw=
 github.com/bitly/go-simplejson v0.5.0 h1:6IH+V8/tVMab511d5bn4M7EwGXZf9Hj6i2xSwkNEM+Y=
@@ -26,8 +28,6 @@ github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
 github.com/kr/text v0.2.0/go.mod h1:eLer722TekiGuMkidMxC/pM04lWEeraHUUmBw8l2grE=
-github.com/launchdarkly/eventsource v1.7.1 h1:StoRQeiPyrcQIXjlQ7b5jWMzHW4p+GGczN2r2oBhujg=
-github.com/launchdarkly/eventsource v1.7.1/go.mod h1:LHxSeb4OnqznNZxCSXbFghxS/CjIQfzHovNoAqbO/Wk=
 github.com/launchdarkly/go-test-helpers/v2 v2.2.0 h1:L3kGILP/6ewikhzhdNkHy1b5y4zs50LueWenVF0sBbs=
 github.com/launchdarkly/go-test-helpers/v2 v2.2.0/go.mod h1:L7+th5govYp5oKU9iN7To5PgznBuIjBPn+ejqKR0avw=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
@@ -71,5 +71,6 @@ gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8
 gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
 gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
 gopkg.in/yaml.v2 v2.2.8/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
-gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+gopkg.in/yaml.v3 v3.0.0 h1:hjy8E9ON/egN1tAYqKb61G10WtihqetD4sz2H+8nIeA=
+gopkg.in/yaml.v3 v3.0.0/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/MarkDin/goz"
 	"github.com/idoubi/goutils"
-	"github.com/idoubi/goz"
 )
 
 func ExampleGet() {

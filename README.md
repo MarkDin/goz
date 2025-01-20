@@ -5,14 +5,14 @@ A fantastic HTTP request library used in golang. Inspired by [guzzle](https://gi
 ## Installation
 
 ```
-go get -u github.com/idoubi/goz
+go get -u github.com/MarkDin/goz
 ```
 
 
 ## Documentation
 
 API documentation can be found here:
-https://godoc.org/github.com/idoubi/goz
+https://godoc.org/github.com/MarkDin/goz
 
 
 ## Basic Usage
@@ -21,7 +21,7 @@ https://godoc.org/github.com/idoubi/goz
 package main
 
 import (
-    "github.com/idoubi/goz"
+    "github.com/MarkDin/goz"
 )
 
 func main() {
